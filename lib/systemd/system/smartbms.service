@@ -1,0 +1,18 @@
+[Unit]
+Description=123\SmartBMS to Thingspeak
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/smartbms_thingspeak
+EnvironmentFile=/home/pi/smartbms_thingspeak/.env.installed
+ExecStart=/usr/bin/python3 -u -m smartbms --port ${SERIAL_PORT} --key ${THINGSPEAK_KEY}
+StandardOutput=syslog
+StandardError=syslog
+RestartSec=5s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
