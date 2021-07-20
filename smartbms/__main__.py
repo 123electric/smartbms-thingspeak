@@ -2,7 +2,6 @@ import sys
 from argparse import ArgumentParser
 import asyncio
 import aiohttp
-import datetime
 from smartbms.smartbms import BMS
 
 class ComInstance:
@@ -63,14 +62,14 @@ async def program():
                         if(resp.status == 200):
                             await resp.text()
                         elif(resp.status == 400):
-                            print(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '\tWrong Thingspeak key: {}'.format(instance.key))
+                            print('Wrong Thingspeak key: {}'.format(instance.key))
                         else:
-                            print(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '\Error updating data: unknown error')
+                            print('Error updating data: unknown error')
                 
-                print(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '\tUpdated values')
+                print('Updated values')
             
             except Exception as e:
-                print(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '\tCould not reach Thingspeak server: ', e)
+                print('Could not reach Thingspeak server: ', e)
 
         await asyncio.sleep(60)
 
