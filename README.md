@@ -1,9 +1,10 @@
 # License
--MIT
--No offical support
+- MIT
+- No offical support
 
 # Description
-This software reads the 123\SmartBMS data via a serial port and uploads it to Thingspeak.
+This software creates a Linux service that reads the 123\SmartBMS data via a serial port and uploads it to Thingspeak.
+It is automatically started when the Raspberry Pi is booted.
 You can connect as many BMS instances as you want. Each 123\SmartBMS needs it's own Thingspeak channel.
 
 # Requirements
@@ -27,3 +28,11 @@ The following commands will open the file with a text editor:
 ```
 sudo nano /home/pi/smartbms_thingspeak/.env.installed
 ```
+
+# Notes
+If you want to check if the service is running fine without any errors, please open a terminal or SSH and use the following command:
+```
+systemctl status smartbms
+```
+The errors should be self explanatory. If there are no errors, you should only see the message that the values are updated every minute.
+If you get any strange errors, please plug out the USB from the Raspberry Pi, plug it back in and reboot.
