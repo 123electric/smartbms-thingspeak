@@ -4,7 +4,7 @@ INSTALL_DIR="/home/pi/smartbms_thingspeak"
 
 if [ "$(whoami)" != root ]
 then
-  echo "Please run as . Example: sudo bash install.sh"
+  echo "Please run as root. Example: sudo bash install.sh"
   exit 1
 fi
 
