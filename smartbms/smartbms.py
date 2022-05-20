@@ -122,23 +122,23 @@ class BMS(object):
         buf = bytearray (BMS_COMM_BLOCK_SIZE)
         while True:
             rx_byte = await reader.readexactly(1)
-            if(self._millis() > self._last_received + BMS_COMM_GAP): 
+            if self._millis() > self._last_received + BMS_COMM_GAP: 
                 bytes_received = 0
             self._last_received = self._millis()
 
-            if(bytes_received <= BMS_COMM_BLOCK_SIZE-1):
+            if bytes_received <= BMS_COMM_BLOCK_SIZE-1:
                 buf[bytes_received] = rx_byte[0]
 
             bytes_received += 1
        
-            if(bytes_received == BMS_COMM_BLOCK_SIZE):
+            if bytes_received == BMS_COMM_BLOCK_SIZE:
                 bytes_received = 0
                 checksum = 0
                 for i in range (BMS_COMM_BLOCK_SIZE-1):
                     checksum += buf[i]
                     
                 received_checksum = buf[BMS_COMM_BLOCK_SIZE-1]
-                if((checksum & 0xff) == received_checksum):
+                if (checksum & 0xff) == received_checksum:
                     self._pack_voltage = self._decode_voltage(buf[0:3])
                     self._charge_current = self._decode_current(buf[3:6])
                     self._discharge_current = self._decode_current(buf[6:9])
@@ -158,9 +158,9 @@ class BMS(object):
                     self._allowed_to_charge = True if (buf[30] & 0b00000001) else False
 
     def _decode_current(self, raw_value):
-        if(raw_value[0] == 'X'):
+        if raw_value[0] == ord('X'):
             return 0
-        elif(raw_value[0] == '-'):
+        elif raw_value[0] == ord('-'):
             factor = -1
         else:
             factor = 1
@@ -174,7 +174,7 @@ class BMS(object):
         return round(0.005*voltage,2)
 
     def _decode_temperature(self, raw_value):
-        return round(0.005*int.from_bytes(raw_value[0:2], byteorder='big', signed=False)*0.857-232,2)
+        return round(int.from_bytes(raw_value[0:2], byteorder='big', signed=False)*0.857-232,0)
     
     def _millis(self):
         return int(time.time() * 1000)
