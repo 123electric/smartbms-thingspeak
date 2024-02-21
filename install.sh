@@ -24,8 +24,11 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 	rm main.zip
 	systemctl is-active --quiet smartbms.service && systemctl stop smartbms.service
 	mv smartbms-thingspeak-main "${INSTALL_DIR}"
+	python3 -m venv ${INSTALL_DIR}/.venv
+	source ${INSTALL_DIR}/.venv/bin/activate
 	python3 -m pip install -e "${INSTALL_DIR}"
 	
+	echo -e "\r\n"
 	read -p "Enter the port the 123\\SmartBMS is connected to [leave empty for /dev/ttyUSB0]: " SERIAL_PORT
 	SERIAL_PORT=${SERIAL_PORT:-/dev/ttyUSB0}
 	read -p "Enter the Thingspeak channel key: " THINGSPEAK_KEY

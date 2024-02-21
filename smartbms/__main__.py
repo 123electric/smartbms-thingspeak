@@ -2,7 +2,7 @@ import sys
 from argparse import ArgumentParser
 import asyncio
 import aiohttp
-from smartbms.smartbms import BMS
+from smartbms import BMS
 
 class ComInstance:
     def __init__(
